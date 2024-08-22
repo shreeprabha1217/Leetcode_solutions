@@ -32,9 +32,11 @@ class Solution {
         return last;
     }
     public int[] searchRange(int[] nums, int target) {
-        int[] result=new int[2];
-        result[0]=firstOccurance(nums,target);
-        result[1]=lastOccurance(nums,target);
-        return result;
+        int first=firstOccurance(nums,target);
+        if(first==-1){
+            return new int[] {-1,-1};
+        }
+        int last=lastOccurance(nums,target);
+        return new int[] {first,last};
     }
 }
