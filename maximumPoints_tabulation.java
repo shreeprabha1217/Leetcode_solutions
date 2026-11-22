@@ -3,26 +3,27 @@ class Solution {
     public int maximumPoints(int mat[][]) {
         int n = mat.length;
 
-        int[][] dp = new int[n][4];
-        dp[0][0]=Math.max(mat[0][1],mat[0][2]);
-        dp[0][1]=Math.max(mat[0][0],mat[0][2]);
-        dp[0][2]=Math.max(mat[0][1],mat[0][0]);
-        dp[0][3]=Math.max(mat[0][1],Math.max(mat[0][2],mat[0][1]));
+        int[] prev = new int[4];
+        prev[0]=Math.max(mat[0][1],mat[0][2]);
+        prev[1]=Math.max(mat[0][0],mat[0][2]);
+        prev[2]=Math.max(mat[0][1],mat[0][0]);
+        prev[3]=Math.max(mat[0][1],Math.max(mat[0][2],mat[0][1]));
         for(int day=1;day<n;day++){
+              int[] temp=new int[4];
             for(int last=0;last<4;last++){
-                dp[day][last]=0;
+               temp[last]=0;
                 int maxi=0;
                 for (int task = 0; task < 3; task++) {
                     if (task != last) {
-                        int point = mat[day][task]
-                            + dp[day-1][task];
 
-                        dp[day][last] = Math.max(dp[day][last], point);
+                       temp[last] = Math.max(temp[last], mat[day][task]
+                            + prev[task]);
                     }
                  }
                 
             }
+            prev=temp;
         }
-        return dp[n-1][3];
+        return prev[3];
     }
 }
